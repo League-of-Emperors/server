@@ -1,0 +1,111 @@
+<tpl-meta>
+    <style>
+        * {
+            font-family: sans-serif;
+            text-decoration: none;
+            margin: 0;
+            padding: 0;
+        }
+    
+        body {
+            background: #1f2020;
+            color: #fff;
+            padding: 35px;
+        }
+
+        .tooltip {
+            background: #097;
+            color: #fff;
+            border-radius: 12px;
+            position: fixed;
+            z-index: 12000;
+            padding: 10px 20px;
+            width: 100px;
+            text-align: center;
+            text-overflow: ellipsis;
+
+            opacity: 1;
+            margin-right: 0px;
+
+            animation: fadeIn .4s;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateX(10px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0px);
+            }
+        }
+    
+        a {
+            font-weight: 900;
+            color: #ddd;
+            transition: .3s;
+        }
+    
+        h1 {
+            margin: 10px 0;
+            font-weight: 100;
+        }
+    
+        a:hover {
+            text-decoration: underline;
+            color: #aaa;
+        }
+    
+        a:nth-child(3n-1) {
+            color: #09f;
+        }
+
+        section {
+            margin: 50px 0;
+        }
+
+        .no {
+            text-decoration: none!important;
+        }
+        svg *, svg {
+            fill: #1fb141;
+        }
+    </style>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fuggles&family=Rubik&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Uchen&display=swap" rel="stylesheet">
+    
+    <script src="https://kit.fontawesome.com/f6412110a3.js" crossorigin="anonymous"></script>
+    <script src="../big-tooltips.js" defer></script>
+</tpl-meta>
+
+<tpl-root @template=/icons @Module=IconsMain>
+    <main @appendTo=DOM:body>
+        <h1>League of Emperors</h1>
+        
+
+        <section>
+            <h2>Icons</h2>
+            <a target="_blank" href="https://icons8.com/icon/6yXbgqjzMqb6/gold-bars">Gold Bars</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> <br>
+            <a target="_blank" href="https://icons8.com/icon/1BTfV6QMEjzA/steel-ore">Steel Ore</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> <br>
+            <a target="_blank" href="https://icons8.com/icon/z28KY9PT3bUI/iron-bars">Iron Bars</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> <br>
+            <a target="_blank" href="https://icons8.com/icon/118750/farm">Farm</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> <br>
+            <a target="_blank" href="https://icons8.com/icon/x6fSWe8fZThN/mine-cart">Mine Cart</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> <br>
+            <a target="_blank" href="https://icons8.com/icon/3hXOdl80Ug6J/small-axe">Small Axe</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> <br>
+            <a target="_blank" href="https://icons8.com/icon/19035/double-up">Double Up</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> <br>
+            <a target="_blank" href="https://icons8.com/icon/65006/online-store">Online Store</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> <br>  
+            <a target="_blank" href="https://icons8.com/icon/81998/bank-safe">Bank Safe</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+            <a target="_blank" href="https://icons8.com/icon/118885/silo">Silo</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+        </section>
+
+        <section>
+            <h2>Icons authors: </h2>
+            <a href="https://fontawesome.com/v5.15/icons/font-awesome?style=brands" data-tooltipbackground="#09f" data-tooltip-big="Fontawesome.com" class="fab fa-font-awesome no"></a>
+            <a href="https://icons8.com/" data-tooltipbackground="#1fb141" data-tooltip-big="Icons8.com"><svg width="14" height="14" viewBox="0 0 14 14" data-v-d31c3db4=""><path d="M7 0H0v14h7V0z" data-v-d31c3db4=""></path> <path d="M10.5 7a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM10.5 14a3.5 3.5 0 100-7 3.5 3.5 0 000 7z" data-v-d31c3db4=""></path></svg></a>
+        </section>
+    </main>
+</tpl-root>

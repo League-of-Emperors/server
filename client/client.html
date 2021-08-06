@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>League of Emperors</title>
+
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Fuggles&family=Rubik&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Uchen&display=swap" rel="stylesheet">
+
+        <script src="https://kit.fontawesome.com/f6412110a3.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="ui">
+            <div id="topbar">
+                <h2 id="city-name"></h2>
+            </div>
+
+            <div id="city-statistics">
+                <p id="city-metal-plate" data-tooltip-big="Metal"> <img src="icons/metal.png" alt="" class="icon24"> <span>0</span></p>
+                <p id="city-stone" data-tooltip-big="Stone"> <img src="icons/rock.png" alt="" class="icon24"> <span>0</span></p>
+                <p id="city-wood" data-tooltip-big="Wood"> <em class="fas fa-tree"></em> <span>0</span></p>
+                <p id="city-food" data-tooltip-big="Food"> <em class="fas fa-drumstick-bite"></em> <span>0</span></p>
+                <p id="city-gold" data-tooltip-big="Gold"><!--<img class="icon32x32" alt="GOLD" src="icons/goldbars.png">--> <em class="fas fa-coins"></em> <span>0</span></p>
+                <p id="city-people" data-tooltip-big="Population"> <em class="fas fa-users"></em> <span>0</span> </p>
+            </div>
+
+            <button class="chat-open-icon-button" data-tooltip="Chat" data-tooltipBackground="rgb(102, 88, 76)">
+                <em class="fas fa-comment"></em>
+            </button>
+
+            <button class="war-menu-icon-button" data-tooltip="War" data-tooltipBackground="rgb(246, 76, 76)">
+                <em class="fas fa-shield-alt"></em>
+            </button>
+
+            <button class="contry-manager-icon-button" data-tooltip="Your city" data-tooltipBackground="rgb(76, 178, 246)">
+                <em class="fas fa-flag"></em>
+            </button>
+
+            <button class="country-building-icon-button" data-tooltip="Buildings" data-tooltipBackground="rgb(42, 126, 60)">
+                <em class="fas fa-hammer"></em>
+            </button>
+
+            <a class="credits-button" data-tooltip="Authors" data-tooltipBackground="#097" role="button" href="credits">
+                <em class="fas fa-users"></em>
+            </a>
+
+            <div class="chat">
+
+                <button class="chat-btn-close"><em class="fas fa-times"></em></button>
+
+                <div id="bottom">
+                    <input type="text" id="chat-input" placeholder="Aa">
+                </div>
+            </div>
+
+            <div class="country-manager">
+                <h3>Your city</h3>
+                <h4 id="city-manager-city-name">Not city yet</h4>
+
+                <div class="country-change">
+                    <label for="range-tax-rate" class="label-country-change">Tax Rate</label> <br>
+                    <div class="input-range">
+
+                        <div class="selectors">
+                            <div class="input-tax-selector selector1">.5</div>
+                            <div class="input-tax-selector selector2">1</div>
+                            <div class="input-tax-selector selector3">1.5</div>
+                            <div class="input-tax-selector selector4">2</div>
+                            <div class="input-tax-selector selector5">2.5</div> 
+                        </div>
+
+                        <input type="range" name="" id="range-tax-rate" value="1" max="2.5" min=".5" step=".5">
+                    </div>
+                </div>
+
+                <div class="checkboxes">
+                    <div class="checkbox-row">
+                        <div class="checkbox-box">
+                            <label for="unlock-trading" class="label-blue-fire">Unlock trading <em class="fas fa-question-circle" data-tooltip="People from other cities, can go to your city and trade. You take taxes from it!" data-tooltipBackground="rgb(102, 88, 76)"></em></label> <br>
+                            <input type="checkbox" name="" id="unlock-trading" class="oldschool-checkbox">
+                        </div>
+                        <div class="checkbox-box">
+                            <label for="allow-people-go-out" class="label-blue-fire">Allow people go out <em class="fas fa-question-circle" data-tooltip="Your people can go out from city without permission" data-tooltipBackground="rgb(102, 88, 76)"></em></label> <br>
+                            <input type="checkbox" name="" id="allow-people-go-out" class="oldschool-checkbox">
+                        </div>
+                        <div class="checkbox-box">
+                            <label for="export-items" class="label-blue-fire">Export products <em class="fas fa-question-circle" data-tooltip="Export products from your city to other cities that have unlocked trading" data-tooltipBackground="rgb(102, 88, 76)"></em></label> <br>
+                            <input type="checkbox" name="" id="export-items" class="oldschool-checkbox">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="city-state">
+                    <div class="your-city-state div-box">
+                        <h5>Your city</h5>
+                        <div class="" id="city-allies">
+                            <span class="text-no-allies">You have no interaction with other cities</span>
+                        </div>
+                    </div>
+                    <div class="other-city-states div-box">
+                        <h5>Other cities</h5>
+                        <div class="" id="other-cities">
+                            <span class="text-no-other-cities">There is no other cities!</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="city-stats">
+                    <div class="box-stat">
+                        <em class="fas fa-smile" id="happiness-level" data-tooltip="People happiness"></em>
+                    </div>
+                    <div class="box-stat">
+                        <em class="fas fa-chart-line" id="chart-birth-rate" data-tooltip="Birth rate"></em>
+                    </div>
+                    <div class="box-stat">
+                        <em class="fas fa-shield-alt" data-tooltip="City protection (mainly military buildings)"></em>
+                    </div>
+                </div>
+
+                <button class="country-manager-close"><em class="fas fa-times"></em></button>
+                <button class="fas fa-plus enlarge-city" data-tooltip="Enlarge your city!"></button> <span id="enlarge-price"><span>5000</span> <em class="fas fa-coins"></em></span>
+            </div>
+
+            <div class="build-house">
+                <h3>Buildings</h3>
+
+                <div class="row">
+                    <div class="col col-build" data-building="Farm">
+                        <img src="icons/farm.png" alt="" class="build-image-icon">
+                        <header class="title-header">Farm</header>
+                        <p class="description-costs">
+                            <em class="fas fa-tree"></em> 300 <br>
+                            <em class="fas fa-coins"></em> 3750 <br>
+                        </p>
+                    </div>
+                    <div class="col col-build" data-building="Mine">
+                        <img src="icons/minecart.png" alt="" class="build-image-icon">
+                        <header class="title-header">Mine</header>
+                        <p class="description-costs">
+                            <em class="fas fa-tree"></em> 265 <br>
+                            <em class="fas fa-coins"></em> 6300 <br>
+                        </p>
+                    </div>
+                    <div class="col col-build" data-building="Lumbermill">
+                        <img src="icons/lumbermill.png" alt="" class="build-image-icon">
+                        <header class="title-header">Lumbermill</header>
+                        <p class="description-costs">
+                            <em class="fas fa-tree"></em> 350 <br>
+                            <em class="fas fa-coins"></em> 4750 <br>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-build" data-building="Vault">
+                        <img src="icons/vault.png" alt="" class="build-image-icon">
+                        <header class="title-header">Vault</header>
+                        <p class="description-costs">
+                            <div class="box-flex" style="display: flex; justify-content: center;"><img src="icons/metal.png" alt="" class="icon24"> <span>1500</span></div>
+                            <em class="fas fa-coins"></em> 65000 <br>
+                        </p>
+                    </div>
+                    <div class="col col-build" data-building="Granary">
+                        <img src="icons/Granary.png" alt="" class="build-image-icon">
+                        <header class="title-header">Granary</header>
+                        <p class="description-costs">
+                            <div class="box-flex" style="display: flex; justify-content: center;"><em class="fas fa-tree" style="font-size: 24px; margin-right: 10px;"></em> <span>1750</span></div>
+                            <div class="box-flex" style="display: flex; justify-content: center;"><img src="icons/rock.png" alt="" class="icon24"> <span>650</span></div>
+                            <div class="box-flex" style="display: flex; justify-content: center;"><img src="icons/metal.png" alt="" class="icon24"> <span>150</span></div>
+                            <em class="fas fa-coins"></em> 17500 <br>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="your-buildings">
+                    <div class="can-scroll-buildings">
+                        <h3>Your buildings</h3> <br>
+
+                        <div id="buildings-container">
+                            <div class="building-row flex flex-wrap-center">
+                                <img src="icons/farm.png" alt="" class="building-image icon96x96">
+
+                                <span class="header-building-name bold">
+                                    Farm
+                                </span>
+
+                                <div class="statisticsof-build col6">
+                                    <span class="inline-flex flex-wrap-center hei24 margin10" data-tooltip="Building farms wood per round"><em class="fas fa-tree fas-right"></em> 0</span>
+                                    <span class="inline-flex flex-wrap-center hei24 margin10" data-tooltip="Building farms stone per round" data-tooltipBackground="#777"><img src="icons/rock.png" alt="" class="icon24"> 0</span>
+                                    <span class="inline-flex flex-wrap-center hei24 margin10" data-tooltip="Building farms metal per round" data-tooltipBackground="#444"><img src="icons/metal.png" alt="" class="icon24"> 0</span>
+                                    <span class="inline-flex flex-wrap-center hei24 margin10" data-tooltip="Building farms food per round" data-tooltipBackground="#444"><em class="fas fa-drumstick-bite fas-right"></em> 0</span>
+                                </div>
+
+                                <div class="build-upgrade">
+                                    <button class="upgrade-building" data-tooltip-big="<b>Upgrade to level</b>: 2 <br> <b>Price</b>: 5250 <em class='fas fa-coins'></em>" data-tooltipBackground="rgb(59, 53, 47)" data-tooltip-height="40" data-tooltip-width="200">
+                                        <img src="icons/upgrade.png" alt="" class="icon36">
+                                    </button>
+
+                                    <span class="level">1</span>
+                                </div>
+                            </div> 
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <button class="country-builder-close"><em class="fas fa-times"></em></button>
+            </div>
+
+            <div class="war-menu">
+                <button class="war-menu-close"><em class="fas fa-times"></em></button>
+                <h1>War</h1>
+                Your army: <span id="army-count">25</span> <br><br><br><br><br>
+                <section id="recruit">
+                    <label for="how-many-to-recruit">Recruit troops</label><br>
+                    <input type="number" name="" id="how-many-to-recruit" min="0" max="10000" step="1" value="25">
+                    <button id="recruit-btn" class="recruit-button">Recruit</button> <i class="fas fa-coins"></i> <span id="price-of-recruit">2500</span>
+                </section>
+            </div>
+
+            <p class="FooterGameVersion">League of Emperors 2.2.1 beta <br> &copy; All Right Reserved. Maciej Dębowski <br> <a href="/icons" jref="ref#0">Icons authors here</a> </p>
+        </div>
+
+        <canvas id="map"></canvas>
+
+        <script src="socket.io.js"></script>
+        <script src="client.js" type="module"></script>
+        <script src="ui-manager.js"></script>
+        <script src="tooltips.js"></script>
+        <script src="big-tooltips.js"></script>
+    </body>
+</html>

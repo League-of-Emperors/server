@@ -1,0 +1,17 @@
+{
+  "name": "leagueofemperors",
+  "version": "2.2.1",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "simplex-noise": "^2.4.0",
+    "socket.io": "^4.1.3"
+  }
+}

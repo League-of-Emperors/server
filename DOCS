@@ -1,0 +1,9 @@
+socket MAP_UPDATE events mean updating map (per every day)
+localstorage player_name mean username
+socket CITIES_UPDATE event mean updating cities (n' they statistics)
+socket UPDATE_CITY_OPTIONS event mean player update city options
+socket PLAYER_CITY_BUILDINGS update player cities (send them to player)
+socket CITY_BUILD_BUILDING is emited by player to server to create building
+socket UPGRADE_BUILDING is emited by player to server to upgrade building
+socket RECRUIT_ARMY is emited by player to server to recruit army troops
+socket MOB_UPDATE is emited by server to clients every 1s to tell which mobs are alive

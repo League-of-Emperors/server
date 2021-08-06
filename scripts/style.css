@@ -1,0 +1,710 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Rubik', sans-serif;
+    user-select: none;
+}
+
+body {
+    overflow: hidden;
+    background: #111;
+}
+
+canvas{
+    margin-top: 60px;
+}
+
+#topbar {
+    top: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    width: 100%;
+    height: 60px;
+    background: #151515;
+    color: #fff;
+    line-height: 60px;
+    text-align: center;
+}
+
+
+.FooterGameVersion {
+    position: fixed;
+    bottom: 5px;
+    left: 5px;
+    color: #fff;
+    text-shadow: 1px 1px #000, -1px -1px #000;
+}
+
+.FooterGameVersion a {
+    color: #fff;
+    text-decoration: none;
+}
+
+#city-statistics {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 10000;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 10px;
+    color: #fff;
+}
+
+#city-statistics p {
+    display: flex;
+    justify-content: center;
+    width: 90px;
+    align-items: center;
+}
+
+#city-statistics p span { font-style: italic; }
+
+#city-statistics em {
+    margin-right: 10px;
+}
+
+.fas.fa-coins { color: rgb(255, 217, 0); }
+.fas.fa-users { color: rgb(102, 88, 76); }
+.fas.fa-drumstick-bite { color: rgb(116, 89, 58); }
+.fas.fa-tree { color: #097; }
+.icon24 { width: 24px; height: 24px; margin-right: 10px; }
+
+.chat-open-icon-button {
+    position: fixed;
+    right: 40px;
+    bottom: 40px;
+    font-size: 34px;
+    height: 50px;
+    width: 50px;
+    border: 2px solid rgb(102, 88, 76);
+    outline: 0;
+    background: transparent;
+    color: rgb(102, 88, 76);
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.war-menu-icon-button {
+    position: fixed;
+    right: 40px;
+    bottom: 100px;
+    font-size: 34px;
+    height: 50px;
+    width: 50px;
+    border: 2px solid rgb(246, 76, 76);
+    outline: 0;
+    background: transparent;
+    color: rgb(246, 76, 76);
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.contry-manager-icon-button {
+    position: fixed;
+    right: 40px;
+    bottom: 160px;
+    font-size: 34px;
+    height: 50px;
+    width: 50px;
+    border: 2px solid rgb(76, 178, 246);
+    outline: 0;
+    background: transparent;
+    color: rgb(76, 178, 246);
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.credits-button {
+    position: fixed;
+    right: 40px;
+    bottom: 280px;
+    font-size: 34px;
+    height: 50px;
+    width: 50px;
+    border: 2px solid #097;
+    outline: 0;
+    background: transparent;
+    color: #097;
+    cursor: pointer;
+    border-radius: 12px;
+    text-align: center;
+    line-height: 50px;
+}
+
+.credits-button .fas.fa-users {
+    color: #097!important;
+}
+
+.country-building-icon-button {
+    position: fixed;
+    right: 40px;
+    bottom: 220px;
+    font-size: 34px;
+    height: 50px;
+    width: 50px;
+    border: 2px solid rgb(42, 126, 60);
+    outline: 0;
+    background: transparent;
+    color: rgb(42, 126, 60);
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+/* TOOLTIP STYLE */
+.tooltip {
+    background: #097;
+    color: #fff;
+    border-radius: 12px;
+    position: fixed;
+    z-index: 12000;
+    padding: 10px 20px;
+    width: 100px;
+    text-align: center;
+    text-overflow: ellipsis;
+
+    opacity: 1;
+    margin-right: 0px;
+
+    animation: fadeIn .4s;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+/* CHAT */
+.chat {
+    position: fixed;
+    bottom: 40px;
+    right: 110px;
+    background: #0008;
+    border-radius: 12px;
+    height: 400px;
+    width: 350px;
+    color: #fff;
+    overflow-y: auto;
+    padding: 10px;
+    display: none;
+}
+
+.chat.active {
+    display: block;
+}
+
+.chat #bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.chat input {
+    width: calc(100% - 20px);
+    border-radius: 0 0 12px 12px;
+    border: 0;
+    outline: 0;
+    height: 20px;
+    padding: 10px;
+    font-size: 20px;
+    background: #0004;
+    color: #fff;
+    text-shadow: 2px 2px #000, -2px -2px #000, -2px 2px #000, 2px -2px #000;
+}
+
+input::placeholder {
+    color: #fff;
+    text-shadow: 0;
+}
+
+.chat-btn-close {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    border: 0;
+    outline: 0;
+    font-size: 18px;
+    cursor: pointer;
+    background: 0;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+}
+
+/* Country Manager */
+.country-manager {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    min-width: 800px;
+    height: 80%;
+    background: #000a;
+    border: 5px solid rgb(59, 53, 47);
+    color: #fff;
+    padding: 10px;
+    display: none;
+}
+
+.country-manager.open {
+    display: block;
+}
+
+.country-manager h3 {
+    color: #fff;
+    text-shadow: 2px 2px rgb(102, 88, 76);
+    font-size: 34px;
+}
+
+.country-manager-close, .country-builder-close, .war-menu-close {
+    position: absolute;
+    right: -5px;
+    top: -5px;
+    border: 0;
+    outline: 0;
+    font-size: 18px;
+    cursor: pointer;
+    background: 0;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    background:rgb(102, 88, 76);
+    border: 5px solid rgb(59, 53, 47);
+    transition: .3s;
+}
+
+.country-manager-close:hover, .country-builder-close:hover, .war-menu-close:hover {
+    transform: scale(0.85);
+}
+
+.country-manager h4 {
+    font-style: italic;
+    color: rgb(200, 174, 148);
+    font-family: 'Uchen', serif;
+}
+
+.input-range {
+    width: 100%;
+    display: block;
+    margin: 10px 0;
+}
+
+.input-range input, input[type="number"] {
+    width: 100%;
+    border-radius: 0;
+    height: 30px;
+    outline: 0;
+    display: block;
+    -webkit-appearance: none;
+    appearance: none;
+    background:rgb(102, 88, 76);
+    border: 2px solid rgb(59, 53, 47);
+}
+
+.label-country-change {
+    font-size: 20px;
+    margin-top: 20px;
+    display: block;
+    margin-bottom: -15px;
+    color: rgb(200, 174, 148);
+    text-shadow: 2px 2px rgb(102, 88, 76);
+    font-family: 'Uchen', serif;
+}
+
+.input-range input::-webkit-slider-thumb {
+    appearance: none;
+    height: 36px;
+    background: rgb(19, 17, 16);
+    width: 16px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.selectors {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.selectors div {
+    height: 40px;
+    background:rgb(59, 53, 47);
+    border-radius: 24px;
+    text-align: center;
+    line-height: 40px;
+    width: 30px;
+    margin-bottom: 10px;
+}
+
+.label-blue-fire {
+    font-family: 'Uchen', serif;
+    font-size: 20px;
+    text-shadow: 2px 2px rgb(19, 17, 16);
+    color: rgb(200, 174, 148);
+}
+
+.oldschool-checkbox {
+    height: 1px;
+    width: 1px;
+    font: normal normal normal 14px/1 FontAwesome!important;
+}
+
+.oldschool-checkbox::before {
+    height: 30px;
+    width: 30px;
+    content: "";
+    display: block;
+    background:rgb(200, 174, 148);
+    cursor: pointer;
+    border: 5px solid rgb(59, 53, 47);
+    margin-left: -30px;
+}
+
+.oldschool-checkbox:checked:before {
+    content: "\f00c";
+    font-size: 24px;
+    text-align: center;
+    line-height: 30px;
+    color: rgb(25, 109, 25);
+}
+
+.checkbox-box {
+    width: 33%;
+    text-align: center;
+    display: inline-block;
+}
+
+.city-state {
+    width: 100%;
+}
+
+.city-state .div-box {
+    width: 40%;
+    float: left;
+    height: 250px;
+    margin-top: 50px;
+    overflow-y: scroll;
+    margin: 50px calc(5% - 10px);
+    background: #0008;
+    padding: 10px;
+}
+
+::-webkit-scrollbar {
+    background:rgb(102, 88, 76);
+}
+
+::-webkit-scrollbar-thumb {
+    background:rgb(59, 53, 47);
+    border-radius: 4px;
+    border: 1px solid rgb(19, 17, 16);
+}
+
+.div-box h5 {
+    font-size: 22px;
+    color:rgb(200, 174, 148);
+    text-shadow: 1px 1px rgb(102, 88, 76);
+}
+
+.city-stats {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.city-stats .box-stat {
+    width: 30%;
+    display: inline-block;
+    background: #0008;
+    height: 100px;
+    margin: 0 10px;
+    border-left: 15px solid rgb(102, 88, 76);
+    border-right: 15px solid rgb(102, 88, 76);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.city-stats .box-stat em {
+    font-size: 40px;
+    color: rgb(60, 158, 36);
+}
+
+/* Buildings */
+.build-house {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    min-width: 800px;
+    height: 80%;
+    background: #000a;
+    border: 5px solid rgb(59, 53, 47);
+    color: #fff;
+    padding: 10px;
+    display: none;
+}
+
+.build-house.open {
+    display: block;
+}
+
+.build-house h3 {
+    color: #fff;
+    text-shadow: 2px 2px rgb(102, 88, 76);
+    font-size: 34px;
+}
+
+.build-house h4 {
+    font-style: italic;
+    color: rgb(200, 174, 148);
+    font-family: 'Uchen', serif;
+}
+
+.row {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.col {
+    width: 200px;
+    margin: 10px;
+    text-align: center;
+}
+
+.col.col-build {
+    cursor: pointer;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.col.col-build:hover {
+    background: #0008;
+}
+
+.can-scroll-buildings {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: calc(100% - 20px);
+    height: 300px;
+    overflow-y: scroll;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-wrap-center {
+    justify-content: center;
+    align-items: center;
+}
+
+.icon96x96 {
+    width: 96px;
+    height: 96px;
+    margin-right: 20px;
+}
+
+.fas-right {
+    margin-right: 10px;
+    font-size: 24px;
+}
+
+.inline-flex {
+    display: inline-flex;
+}
+
+.hei24 {
+    height: 24px!important;
+    line-height: 24px;
+}
+
+.margin10 {
+    margin: 0 10px;
+}
+
+.bold {
+    font-weight: 900;
+}
+
+.header-building-name {
+    font-size: 24px;
+    padding: 0 20px;
+}
+
+.upgrade-building {
+    margin-left: 25px;
+    border: 0;
+    outline: 0;
+    background: 0;
+    cursor: pointer;
+}
+
+.icon48 {
+    height: 48px;
+    width: 48px;
+}
+
+.icon36 {
+    height: 36px;
+    width: 36px;
+}
+.level {
+    color: #fff;
+    margin-left: -6px;
+    font-weight: 900;
+}
+
+.enlarge-city {
+    outline: 0;
+    border: 0;
+    background: 0;
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: .3s;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.enlarge-city:hover {
+    background: #0008;
+}
+
+#enlarge-price {
+    font-size: 22px;
+}
+
+.war-menu {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    min-width: 800px;
+    background: #000a;
+    border: 5px solid rgb(59, 53, 47);
+    color: #fff;
+    padding: 10px;
+    display: none;
+}
+
+.war-menu.open {
+    display: block;
+}
+
+input[type="number"] {
+    color: #fff;
+    padding: 0 10px;
+    width: calc(100% - 30px);
+}
+
+input::-webkit-inner-spin-button {
+    -moz-appearance:none;
+    appearance: none;
+    margin: 0;
+}
+
+.recruit-button {
+    border: 0;
+    outline: 0;
+    font-size: 18px;
+    cursor: pointer;
+    background: 0;
+    color: #fff;
+    background:rgb(102, 88, 76);
+    border: 2px solid rgb(59, 53, 47);
+    padding: 10px 20px;
+    margin: 10px 0;
+    transition: .3s;
+}
+
+.recruit-button:hover {
+    background: rgb(59, 53, 47);
+    transform: scale(.95);
+    box-shadow: 0 0 8px rgb(59, 53, 47);
+}
+
+.btn-inv {
+    border: 0;
+    outline: 0;
+    background: 0;
+    color: rgb(246, 76, 76);
+    cursor: pointer;
+}
+
+.notification {
+    position: fixed;
+    bottom: 40px;
+    right: 100px;
+    background: #333;
+    width: 375px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    color: #fff;
+    animation: bottom-to-top-fade 1.5s;
+    text-align: center;
+    padding-left: 25px;
+    transform: translateY(-15px);
+        opacity: 0;
+        transition: .3s;
+}
+
+._1x1-full-icon {
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    transform: scale(1.05);
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+._notification_description {
+    max-width: 225px;
+    text-overflow: ellipsis;
+}
+
+@keyframes bottom-to-top-fade {
+    0% {
+        transform: translateY(15px);
+        opacity: 0;
+    }
+
+    20% {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+
+    80% {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-15px);
+        opacity: 0;
+    }
+}

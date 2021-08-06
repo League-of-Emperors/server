@@ -1,0 +1,13 @@
+{
+    "port": "80",
+    "websocket-port": "801",
+    "mapX": 50,
+    "mapY": 50,
+    "ipaddress": "localhost",
+    "enlarge": {
+        "enlargeNote": "this function isn't completed :( !",
+        "doEnlarge": false,
+        "enlargeAtOnce": 1,
+        "enlargeTimeout": 10000
+    }
+}
