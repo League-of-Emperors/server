@@ -16,7 +16,7 @@
     4. Edit <b>config.json</b> file, set ipaddress to vps ip or <br>
     if you running at your own computer set it to: <b>localhost</b> <br>
     5. Open folder scripts <br>
-    6. Open file <b>config.js</b> and replace <i>thegreatkingdomofjoniec.tk</i><br>
+    6. Open file <b>config.js</b> and replace <i>league-of-emperors.tk</i><br>
     to value that you inserted in config.json file as ipaddress <br>
     7. Run terminal at this folder, and type <b>node .</b> <br>
     8. Have great time :)
@@ -24,7 +24,8 @@
   
   <h2>Credits</h2>
   <p>
-    <b>Programming and scripts: </b> Maciej Dębowski <br>
+    <b>Programming: </b> Maciej Dębowski <br>
+    <b>Graphics: </b> Tomasz M. <br>
     <b>Icons: </b> <a href="https://icons8.com/">Icons8</a> and <a href="https://fontawesome.com/">FontAwesome</a> <br>
   </p>
   
