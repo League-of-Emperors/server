@@ -3,7 +3,7 @@
     "websocket-port": "801",
     "mapX": 50,
     "mapY": 50,
-    "ipaddress": "http://leagueofemperors.tk/.tk",
+    "ipaddress": "leagueofemperors.tk",
     "enlarge": {
         "enlargeNote": "this function isn't completed :( !",
         "doEnlarge": false,
