@@ -9,6 +9,11 @@ class Mob {
         this.image = 'assets/drake.jpg'
         this.color = ''
 
+        this.animationFrames = []
+        this.dieAnimation = ['']
+        this.died = false
+        this.dieStep = 0
+
         this.x = x
         this.y = y
     }

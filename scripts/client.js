@@ -53,6 +53,12 @@ let map = []
 let cities = []
 let mobs = []
 
+/* FPS */
+const FPS = 1
+
+/* ANIMATION */
+let animationStep = 0
+
 /* Canvas / Canvas Context */
 const canvas = document.querySelector("canvas")
 const ctx = canvas.getContext("2d")
@@ -160,7 +166,6 @@ socket.on('MAP_UPDATE', data => {
     map = data
     updateMap()
     drawCities()
-    renderMobs()
 })
 
 /* Trying to get cities from server (once per second server emit cities) */
@@ -169,7 +174,6 @@ socket.on('CITIES_UPDATE', data => {
     document.querySelector("#city-name").innerHTML = GetPlayerCity(name) == undefined ? 'Not city yet' : GetPlayerCity(name).CityName
     document.querySelector("#city-manager-city-name").innerHTML = GetPlayerCity(name) == undefined ? 'Not city yet' : GetPlayerCity(name).CityName
     drawCities()
-    renderMobs()
 
     /* If city exist, give it stats */
 
@@ -295,7 +299,6 @@ function updateMap() {
         }) 
     }  
 
-    renderMobs()
 }
 
 /* Canvas Click Event ( Creating city ) */
@@ -580,12 +583,32 @@ socket.on('NOTIFICATION', data => {
 /* Mobs spawning */
     socket.on('MOB_UPDATE', data => {
         mobs = data
+        updateMap()
+        drawCities()
         renderMobs()
     })
 
     function renderMobs() {
         mobs.forEach(mob => {
-            renderer.renderImage(mob.x * ScaleX - offsetX * ScaleX, mob.y * ScaleY - offsetY * ScaleY, 2.5 * ScaleX, 2.5 * ScaleY, mob.image)
+            let image = mob.animationFrames[animationStep % mob.animationFrames.length]
+            if(mob.hp <= 0 && mob.completlyDie == undefined) {
+                image = mob.dieAnimation[mob.dieStep % mob.dieAnimation.length]
+            }
+
+            renderer.renderImage(mob.x * ScaleX - offsetX * ScaleX, mob.y * ScaleY - offsetY * ScaleY, 2.5 * ScaleX, 2 * ScaleY, image)
+            
         })
+
+        animationStep++
     }
+/* END */
+
+/* Always Rendering */
+
+setInterval(() => {
+    updateMap()
+    drawCities()
+    renderMobs()
+}, 1000 / FPS)
+
 /* END */

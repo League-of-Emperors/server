@@ -121,7 +121,7 @@ canvas{
 .credits-button {
     position: fixed;
     right: 40px;
-    bottom: 280px;
+    bottom: 340px;
     font-size: 34px;
     height: 50px;
     width: 50px;
@@ -133,6 +133,21 @@ canvas{
     border-radius: 12px;
     text-align: center;
     line-height: 50px;
+}
+
+.mobs-icon-buttons {
+    position: fixed;
+    right: 40px;
+    bottom: 280px;
+    font-size: 34px;
+    height: 50px;
+    width: 50px;
+    border: 2px solid #ae34eb;
+    outline: 0;
+    background: transparent;
+    color: #ae34eb;
+    cursor: pointer;
+    border-radius: 12px;
 }
 
 .credits-button .fas.fa-users {
@@ -707,4 +722,32 @@ input::-webkit-inner-spin-button {
         transform: translateY(-15px);
         opacity: 0;
     }
+}
+
+.build-image-icon {
+    width: 64px;
+    height: 64px;
+}
+
+.monsters-arrived {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60vw;
+    height: 80vh;
+    background: #000d;
+    color: #fff;
+    padding: 10px;
+    border: 5px solid rgb(59, 53, 47);
+    display: none;
+}
+
+.column {
+    width: 50%;
+}
+
+.monster-arrived {
+    color: rgb(200, 174, 148);
+    text-shadow: 2px 2px rgb(59, 53, 47);
 }

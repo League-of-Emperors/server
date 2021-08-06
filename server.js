@@ -20,10 +20,12 @@ const simplex = new SimplexNoise()
 const [Farm, Mine, Lumbermill, Vault, Granary] = [require("./classess/Building/Farm.class.js"), require("./classess/Building/Mine.class.js"), require("./classess/Building/Lumbermill.class.js"), require("./classess/Building/Vault.class.js"), require("./classess/Building/Granary.class.js")]
 const BuildingsArray = [Farm, Mine, Lumbermill, Vault, Granary]
 
-const [Drake] = [require("./classess/Mobs/Drake.class.js")]
-const MobsArray = [Drake]
+const [Drake, Chonk] = [require("./classess/Mobs/Drake.class.js"), require("./classess/Mobs/Chonk.class.js")]
+const MobsArray = [Drake, Chonk]
 
 const seed = parseInt(Math.random() * 2048)
+
+const FPS = 1
 
 /* Util function */
 
@@ -121,7 +123,7 @@ class Server {
         this.seed = seed
         this.players = []
         this.Bots = 0
-        this.Mobs = []
+        this.Mobs = [new Drake(randint(0,50),randint(0,50)), new Chonk(randint(0,50),randint(0,50))]
 
         this.mapX = this.config.mapX
         this.mapY = this.config.mapY
@@ -160,6 +162,7 @@ class Server {
 
         setInterval(() => this.io.emit('MAP_UPDATE', this.map), 1000) // Map Update 1 time per 1 second
         //setInterval(() => this.io.emit("PLAYER_CITY_BUILDINGS_ALL", this.cities), 1000)
+        setInterval(() => this.mobsMovement(), (1000 / FPS))
         setInterval(() => {
 
             // At some time, create a bot city :)!
@@ -684,6 +687,13 @@ class Server {
             const mob = MobsArray[i]
             const instance = new mob(0,0)
 
+            let doContinue = false
+            this.Mobs.forEach(currentMob => {
+                if(currentMob.name == instance.name) doContinue = true;
+            })
+
+            if(doContinue == true) continue
+
             if(random0to100 < instance.rarity) { // if random number lower than rarity then spawn mob
 
                 const [x, y] = [randint(0, this.config.mapX), randint(0, this.config.mapY)]
@@ -752,6 +762,62 @@ class Server {
             this.mapY++
         }
         
+    }
+
+    mobsState() {
+        this.Mobs.forEach((mob, key) => {
+            if(mob.hp < 0 && mob.died == false) {
+                setTimeout(() => {
+                    mob.completlyDie = true
+                    this.Mobs.splice(key, 1)
+                }, 4000)
+                setInterval(() => {
+                    mob.dieStep++
+                }, 1000 )
+
+                mob.died = true
+            }
+        })
+    }
+
+    mobsMovement() {
+        /**
+         * Mobs Movement
+         * 
+         */
+
+        this.Mobs.forEach(mob => {
+            // Calculating axis of movement for every mob in every direection then add it to them XY pos
+            let xVelocity = (parseInt(Math.random() * 20) - 10) / 20, yVelocity = (parseInt(Math.random() * 20) - 10) / 20
+            mob.x += xVelocity
+            mob.y += yVelocity
+
+            // DELETE THIS AFTER TEST
+            mob.hp -= 200
+
+            // Check if mob in map
+
+            if(mob.x < 1) {
+                mob.x = 1
+            }
+
+            if(mob.y < 1) {
+                mob.y = 1
+            }
+
+            if(mob.x > this.config.mapX) {
+                mob.x = this.config.mapX - 1
+            }
+
+            if(mob.y > this.config.mapY) {
+                mob.y = this.config.mapY - 1
+            }
+
+        })
+
+        this.io.emit('MOB_UPDATE', this.Mobs)
+
+        this.mobsState()
     }
 
     createMap() {
