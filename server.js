@@ -227,8 +227,8 @@ class Server {
                         city.Wood += ((building.WoodPerRound * woodBoost / 5) * building.upgradeLevel)
                         city.Stone += ((building.StonePerRound * mineBoost / 5) * building.upgradeLevel)
                         city.Metal += ((building.MetalPerRound * 1 / 5) * building.upgradeLevel)
-                        city.MaxGold += (building.increseMaxGold * 1 / 5 * building.upgradeLevel) 
-                        city.MaxFood += (building.increseMaxFood * 1 / 5 * building.upgradeLevel) 
+                        city.MaxGold += (building.increseMaxGold * 1 / 1 * building.upgradeLevel) 
+                        city.MaxFood += (building.increseMaxFood * 1 / 1 * building.upgradeLevel) 
                     }
                     
                 })
