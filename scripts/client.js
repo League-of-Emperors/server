@@ -381,7 +381,7 @@ socket.on('PLAYER_CITY_BUILDINGS_ALL', cities => {
                         <span class="inline-flex flex-wrap-center hei24 margin10" data-tooltip="Building farms food per round" data-tooltipBackground="brown"><em class="fas fa-drumstick-bite fas-right"></em> ${building.produceFoodPerRound}</span>
                     </div>
                     <div class="build-upgrade">
-                        <button class="upgrade-building" data-name="${building.name}" data-tooltip-big="<b>Upgrade to level</b>: ${building.upgradeLevel + 1} <br> <b>Price</b>: ${(building.price * building.upgradeLevel) * 1.4} <em class='fas fa-coins'></em>" data-tooltipBackground="rgb(59, 53, 47)" data-tooltip-height="40" data-tooltip-width="200">
+                        <button class="upgrade-building" data-name="${building.name}" data-tooltip-big="<b>Upgrade to level</b>: ${building.upgradeLevel + 1} <br> <b>Price</b>: ${(building.price * building.upgradeLevel) * .8} <em class='fas fa-coins'></em>" data-tooltipBackground="rgb(59, 53, 47)" data-tooltip-height="40" data-tooltip-width="200">
                             <img src="icons/upgrade.png" alt="" class="icon36">
                         </button>
                         <span class="level">${building.upgradeLevel}</span>
