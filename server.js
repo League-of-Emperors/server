@@ -561,7 +561,7 @@ class Server {
 
                     city.buildings.forEach(build => {
                         if(build.name != data.BuildingName) return;
-                        let priceOf = ((build.price * build.upgradeLevel) * 1.4)
+                        let priceOf = ((build.price * build.upgradeLevel) * .8)
                         if(city.Gold >= priceOf) {
                             build.upgradeLevel++
                             city.Gold -= priceOf
