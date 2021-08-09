@@ -1,7 +1,7 @@
 const Building = require("../Building.class.js")
 class Granary extends Building {
     price = 17500
-    name = 'Vault'
+    name = 'Granary'
     earnsMoneyPerRound = +70
     protectsCity = +0
     price_wood = 1750
