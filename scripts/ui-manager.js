@@ -44,6 +44,11 @@ document.querySelector(".country-builder-close").addEventListener("click", funct
     .classList.remove("open")
 })
 
+/* Arrived monsters */
+document.querySelector(".mobs-icon-buttons").addEventListener("click", () => {
+    document.querySelector(".monsters-arrived").classList.toggle("show")
+})
+
 /* Always close */
 document.addEventListener("keyup", function(e) {
     if(e.which == 27) {
@@ -58,6 +63,8 @@ document.addEventListener("keyup", function(e) {
 
         document.querySelector(".war-menu")
         .classList.remove("open")
+
+        document.querySelector(".monsters-arrived").classList.remove("show")
     }
 })
 
@@ -73,5 +80,7 @@ document.querySelector("canvas").addEventListener("click", function(e) {
 
     document.querySelector(".war-menu")
     .classList.remove("open")
+
+    document.querySelector(".monsters-arrived").classList.remove("show")
 })
 

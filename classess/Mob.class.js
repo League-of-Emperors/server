@@ -1,6 +1,7 @@
 class Mob {
     constructor(x, y) {
         this.hp = 5000
+        this.maxhp = 5000
         this.name = ''
         this.damage = 10
         this.groupAttack = false

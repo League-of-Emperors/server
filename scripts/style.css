@@ -745,9 +745,121 @@ input::-webkit-inner-spin-button {
 
 .column {
     width: 50%;
+    height: 100%;
 }
 
 .monster-arrived {
     color: rgb(200, 174, 148);
     text-shadow: 2px 2px rgb(59, 53, 47);
+    font-size: 36px;
+    margin-top: 5px;
+}
+
+.monsters-arrived.show {
+    display: block;
+}
+
+.monster-image {
+    width: 100%;
+    background: transparent;
+}
+
+.placeholder-health-track {
+    background: #000d;
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.track-thumb {
+    background: linear-gradient(to right, rgb(246, 76, 76), rgb(184, 27, 27));
+    background-size: 1000%;
+    background-position: left;
+    border-radius: 8px;
+    width: 80%;
+    text-align: center;
+    padding: 5px;
+    animation: animate_track_background 10s infinite;
+}
+
+@keyframes animate_track_background {
+    0% {
+        background-position: left;
+    }
+    50% {
+        background-position: right;
+    }
+    100% {
+        background-position: left;
+    }
+}
+
+.stat-box {
+    margin: 10px 0;
+}
+
+.header-statistic-name {
+    font-size: 20px;
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+
+.green-hp { background: linear-gradient(to right, rgb(101, 206, 75) 50%, #333 50%); background-position: 0%; background-size: 200%; animation: 0; transition: .8s; }
+.right-blundered-bg {
+    background: #000d;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+#monster-image-gif-preview {
+    border-radius: 12px;
+}
+
+#attack-monster {
+    padding: 10px 20px;
+    border-radius: 12px;
+    width: 200px;
+    margin: 10px;
+    border: 0;
+    outline: 0;
+    background: rgb(246, 76, 76);
+    cursor: pointer;
+    color: #fff;
+    font-weight: 700;
+    font-size: 20px;
+    transition: .3s;
+}
+
+#attack-monster:hover {
+    background: rgb(184, 27, 27);
+}
+
+.arrow-button {
+    border: 0;
+    outline: 0;
+    background: 0;
+    color: #fff;
+    font-size: 22px;
+    text-align: center;
+    line-height: 36px;
+    cursor: pointer;
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+}
+
+.arrow-button em {
+    text-align: center;
+}
+
+.controls-arrived {
+    display: flex;
+    justify-content: space-between;
+}
+
+#no-mob {
+    display: none;
+    height: 100%; display: flex; justify-content: center; align-items: center;
 }

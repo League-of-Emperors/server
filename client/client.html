@@ -232,17 +232,52 @@
 
                 <div class="container-main">
                     <div class="row">
-                        <div class="column">
-                            <h2>Arrived monsters</h2>
+                        <div class="column" id="no-mob">
+                            <span>There is no monster arrived</span>
                         </div>
-                        <div class="column">
-                            <h2 class="monster-arrived">Drake</h2>
+                        <div class="column right-blundered-bg" id="mob-stats-overload-box">
+                            <img src="assets/dragon_flame_animation_preview.gif" alt="Image could not load." id="monster-image-gif-preview" class="monster-image">
+                            <h2 class="monster-arrived" id="monster-name-aaaa">Drake</h2>
+
+                            <div class="stat-box">
+                                <header class="header-statistic-name">Health Points</header>
+                                <div class="placeholder-health-track">
+                                    0%
+                                    <div class="track-thumb green-hp" id="hp-track">
+                                        5000 HP
+                                    </div>
+                                    100%
+                                </div>
+                            </div>
+
+                            <div class="stat-box">
+                                <header class="header-statistic-name">Damage</header>
+                                <div class="placeholder-health-track">
+                                    <div class="track-thumb" style="width: 100%;" id="physical-damage">
+                                        370
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button id="attack-monster">
+                                Attack
+                            </button>
+
+                            <div class="controls-arrived">
+                                <button class="arrow-button navigate-interactive___event" data-index="-1">
+                                    <em class="fas fa-chevron-left"></em>
+                                </button>
+                                <button class="arrow-button navigate-interactive___event" data-index="1">
+                                    <em class="fas fa-chevron-right"></em>
+                                </button>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
 
-            <p class="FooterGameVersion">League of Emperors 2.2.1 beta <br> &copy; All Right Reserved. Maciej Dębowski <br> </p>
+            <p class="FooterGameVersion">League of Emperors 2.3.0 beta <br> &copy; All Right Reserved. Maciej Dębowski <br> </p>
         </div>
 
         <canvas id="map"></canvas>

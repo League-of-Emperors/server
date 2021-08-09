@@ -15,6 +15,7 @@ const socket = require("socket.io")
 const fs = require("fs")
 const Lib = require("./libs/lib.js")
 const SimplexNoise = require("simplex-noise")
+const { isFunction } = require("util")
 const simplex = new SimplexNoise()
 
 const [Farm, Mine, Lumbermill, Vault, Granary] = [require("./classess/Building/Farm.class.js"), require("./classess/Building/Mine.class.js"), require("./classess/Building/Lumbermill.class.js"), require("./classess/Building/Vault.class.js"), require("./classess/Building/Granary.class.js")]
@@ -37,6 +38,7 @@ function randint(min, max) { // -10 20
 const colorSuccess = '#8feb34'
 const colorDanger = '#f2594e'
 const colorInfo = '#21dbcf'
+const colorAtomicYellow = '#e5ff3b'
 
 /* PROTOTYPES */
 
@@ -123,7 +125,7 @@ class Server {
         this.seed = seed
         this.players = []
         this.Bots = 0
-        this.Mobs = [new Drake(randint(0,50),randint(0,50)), new Chonk(randint(0,50),randint(0,50))]
+        this.Mobs = []
 
         this.mapX = this.config.mapX
         this.mapY = this.config.mapY
@@ -227,8 +229,8 @@ class Server {
                         city.Wood += ((building.WoodPerRound * woodBoost / 5) * building.upgradeLevel)
                         city.Stone += ((building.StonePerRound * mineBoost / 5) * building.upgradeLevel)
                         city.Metal += ((building.MetalPerRound * 1 / 5) * building.upgradeLevel)
-                        city.MaxGold += (building.increseMaxGold * 1 / 1 * building.upgradeLevel) 
-                        city.MaxFood += (building.increseMaxFood * 1 / 1 * building.upgradeLevel) 
+                        city.MaxGold += (building.increseMaxGold * 1 / 5 * building.upgradeLevel) 
+                        city.MaxFood += (building.increseMaxFood * 1 / 5 * building.upgradeLevel) 
                     }
                     
                 })
@@ -481,6 +483,81 @@ class Server {
                 })
             })
 
+            socket.on('ATTACK_AT_MONSTER', data => {
+                /**
+                 * 
+                 * @object data model:
+                 * @var CityMayor
+                 * @var MobName
+                 * 
+                 * 
+                 */
+
+                const city = this.getPlayerCity(data.CityMayor)
+                let monster = {}
+
+                this.Mobs.forEach(mob => {
+                    if(mob.name == data.MobName) monster = mob
+                })
+
+                if(city == undefined || monster == {}) return
+                if(monster.hp < 0) return
+
+                let troops = city.Army
+
+                // Fight Rounds (XD)
+                let alive = true
+                while(alive) {
+                    if(monster.groupAttack == false) {
+                        troops--
+                    }
+                    else {
+                        troops -= ( monster.damage / 10 )
+                    }
+
+                    monster.hp -= (troops)
+
+                    if(monster.hp < 0) {
+                        
+                        // Player Wins
+                        this.io.emit('NOTIFICATION', {
+                            icon: 'fas fa-crown',
+                            color: colorAtomicYellow,
+                            text: `Player ${data.CityMayor} defeats ${monster.name}`
+                        })
+
+                        socket.emit('NOTIFICATION', {
+                            icon: 'fas fa-crown',
+                            color: colorAtomicYellow,
+                            text: `You killed ${monster.name} and looted ${monster.loot} gold`
+                        })
+
+                        this.cities.forEach(city => {
+                            if(city.CityMayor != data.CityMayor) return;
+                            city.Army = troops
+                            city.Gold += monster.loot
+                        })
+                        break
+                    }
+                    if(troops < 0) {
+                        
+                        // Mob wins
+                        this.io.emit('NOTIFICATION', {
+                            icon: 'fas fa-crown',
+                            color: colorDanger,
+                            text: `Player ${data.CityMayor} has been defeated by ${monster.name}`
+                        })
+                        this.cities.forEach(city => {
+                            if(city.CityMayor != data.CityMayor) return;
+                            city.Army = troops
+                            city.Gold += monster.loot
+                        })
+                        break
+                    }
+                }
+
+            })
+
             socket.on('RECRUIT_ARMY', data => {
                 /**
                  * 
@@ -561,7 +638,7 @@ class Server {
 
                     city.buildings.forEach(build => {
                         if(build.name != data.BuildingName) return;
-                        let priceOf = ((build.price * build.upgradeLevel) * .8)
+                        let priceOf = ((build.price * build.upgradeLevel) * 1.4)
                         if(city.Gold >= priceOf) {
                             build.upgradeLevel++
                             city.Gold -= priceOf
@@ -655,7 +732,18 @@ class Server {
             name += alphabet[parseInt(Math.random() * alphabet.length)]
         }
 
-        const [x, y] = [parseInt(Math.random() * this.config.mapX), parseInt(Math.random() * this.config.mapY)]
+        let [x, y] = [parseInt(Math.random() * this.config.mapX), parseInt(Math.random() * this.config.mapY)]
+
+        // This won't allow to create city at ocean
+        while(true) {
+            if(getMainBiomeAtXY(x, y, this.map) == 3) {
+                x = parseInt(Math.random() * this.config.mapX)
+                y = parseInt(Math.random() * this.config.mapY)
+            }
+            else break
+        }
+
+        // end while
 
         const CityInstance = new City(name, `Bot${this.Bots + 1}`, x, y)
         CityInstance.isBot = true
@@ -767,6 +855,13 @@ class Server {
     mobsState() {
         this.Mobs.forEach((mob, key) => {
             if(mob.hp < 0 && mob.died == false) {
+
+                this.io.emit('NOTIFICATION', {
+                    color: colorDanger,
+                    icon: 'fas fa-pastafarianism',
+                    text: `${mob.name} has dead`
+                })
+
                 setTimeout(() => {
                     mob.completlyDie = true
                     this.Mobs.splice(key, 1)
@@ -793,7 +888,7 @@ class Server {
             mob.y += yVelocity
 
             // DELETE THIS AFTER TEST
-            mob.hp -= 200
+            mob.hp -= 50
 
             // Check if mob in map
 
@@ -818,6 +913,14 @@ class Server {
         this.io.emit('MOB_UPDATE', this.Mobs)
 
         this.mobsState()
+    }
+
+    getPlayerCity(mayor) {
+        for(let i = 0; i < this.cities.length; i++) {
+            if(this.cities[i].CityMayor == mayor) {
+                return this.cities[i]
+            }
+        }
     }
 
     createMap() {
@@ -856,6 +959,27 @@ class Server {
 const server = new Server(require("./config.json")) 
 
 // utils
+
+function getMainBiomeAtXY(x, y, map) {
+    let biome_ = []
+
+    const [cityX, cityY] = [x, y]
+    let closestBiome = {}
+
+    map.forEach(chunk => {
+        if (
+            chunk.x > (cityX)
+            && chunk.y > (cityY)
+            && chunk.y < (cityY + 10 / 5)
+            && chunk.x < (cityX + 10 / 5)
+            && chunk.height > 34
+        ) {
+            biome_.push(chunk)
+        }
+    })
+    return biome_
+}
+
 function getMainBiomeOfCity(name) {
     let biome_ = []
     if(name == undefined) return;

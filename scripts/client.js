@@ -56,6 +56,9 @@ let mobs = []
 /* FPS */
 const FPS = 1
 
+/* MONSTERS */
+let _selected_mob_index = 0
+
 /* ANIMATION */
 let animationStep = 0
 
@@ -381,7 +384,7 @@ socket.on('PLAYER_CITY_BUILDINGS_ALL', cities => {
                         <span class="inline-flex flex-wrap-center hei24 margin10" data-tooltip="Building farms food per round" data-tooltipBackground="brown"><em class="fas fa-drumstick-bite fas-right"></em> ${building.produceFoodPerRound}</span>
                     </div>
                     <div class="build-upgrade">
-                        <button class="upgrade-building" data-name="${building.name}" data-tooltip-big="<b>Upgrade to level</b>: ${building.upgradeLevel + 1} <br> <b>Price</b>: ${(building.price * building.upgradeLevel) * .8} <em class='fas fa-coins'></em>" data-tooltipBackground="rgb(59, 53, 47)" data-tooltip-height="40" data-tooltip-width="200">
+                        <button class="upgrade-building" data-name="${building.name}" data-tooltip-big="<b>Upgrade to level</b>: ${building.upgradeLevel + 1} <br> <b>Price</b>: ${(building.price * building.upgradeLevel) * 1.4} <em class='fas fa-coins'></em>" data-tooltipBackground="rgb(59, 53, 47)" data-tooltip-height="40" data-tooltip-width="200">
                             <img src="icons/upgrade.png" alt="" class="icon36">
                         </button>
                         <span class="level">${building.upgradeLevel}</span>
@@ -589,6 +592,7 @@ socket.on('NOTIFICATION', data => {
     })
 
     function renderMobs() {
+        showUpMobStats(mobs[_selected_mob_index % mobs.length])
         mobs.forEach(mob => {
             let image = mob.animationFrames[animationStep % mob.animationFrames.length]
             if(mob.hp <= 0 && mob.completlyDie == undefined) {
@@ -611,4 +615,48 @@ setInterval(() => {
     renderMobs()
 }, 1000 / FPS)
 
+/* END */
+
+/* Arrived monsters show stats */
+    let _selected_mob = null;
+
+    function showUpMobStats(mob) {
+        if(mob == undefined) {
+            document.querySelector("#no-mob").style.display = "block"
+            document.querySelector("#mob-stats-overload-box").style.display = "none"
+            return;
+        }
+
+        document.querySelector("#no-mob").style.display = "none"
+        document.querySelector("#mob-stats-overload-box").style.display = "block"
+        _selected_mob = mob
+        const
+            hp = mob.hp,
+            maxhp = mob.maxhp,
+            dmg = mob.damage
+
+        document.querySelector("#hp-track").innerHTML = `${hp} HP`
+        document.querySelector("#monster-name-aaaa").innerHTML = mob.name
+        document.querySelector("#physical-damage").innerHTML = dmg
+        if(document.querySelector("#monster-image-gif-preview").src.split(Origin + "/")[1] != mob.image) {
+            document.querySelector("#monster-image-gif-preview").src = mob.image
+        }
+        document.querySelector("#hp-track").style.backgroundPosition = `${100 - Math.abs((hp / maxhp) * 100)}%`
+    }
+
+    document.querySelectorAll(".navigate-interactive___event").forEach(btn => {
+        btn.addEventListener("click", () => {
+            _selected_mob_index += parseInt(btn.dataset.index)
+            showUpMobStats(mobs[_selected_mob_index % mobs.length])
+        }) 
+    })
+
+    document.querySelector("#attack-monster")
+    .addEventListener("click", () => {
+        const monster = mobs[_selected_mob_index % mobs.length]
+        socket.emit('ATTACK_AT_MONSTER', {
+            CityMayor: name,
+            MobName: monster.name
+        })
+    })
 /* END */
