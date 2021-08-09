@@ -150,6 +150,23 @@ canvas{
     border-radius: 12px;
 }
 
+.inventory-icon-button {
+    position: fixed;
+    right: 40px;
+    bottom: 400px;
+    font-size: 34px;
+    height: 50px;
+    width: 50px;
+    border: 2px solid rgb(56, 38, 15);
+    outline: 0;
+    background: transparent;
+    color: rgb(56, 38, 15);
+    cursor: pointer;
+    border-radius: 12px;
+    text-align: center;
+    line-height: 50px;
+}
+
 .credits-button .fas.fa-users {
     color: #097!important;
 }
@@ -862,4 +879,105 @@ input::-webkit-inner-spin-button {
 #no-mob {
     display: none;
     height: 100%; display: flex; justify-content: center; align-items: center;
+}
+
+.inventory-container {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    min-width: 800px;
+    height: 80%;
+    background: #000a;
+    border: 5px solid rgb(59, 53, 47);
+    color: #fff;
+    padding: 10px;
+    display: none;
+}
+
+.inventory-container.open {
+    display: block;
+}
+
+.inventory-item {
+    width: 120px;
+    height:75px;
+    border: 2px solid rgb(56, 38, 15);
+    color: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    transition: .3s;
+    margin: 10px;
+}
+
+.inventory-item em {
+    font-size: 30px;
+}
+
+.inventory-h2-class {
+    font-size: 34px;
+    margin-bottom: 10px;
+}
+
+.crate-opening-track {
+    background: #000d;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 250px;
+    width: 60vw;
+    color: #fff;
+    border: 5px solid rgb(59, 53, 47);
+    text-align: center;
+    padding: 10px;
+    display: none;
+}
+
+.crate-opening-track.open {
+    display: block;
+}
+
+.crate-opening-track h2 {
+    font-size: 30px;
+}
+
+.crate-opening-container {
+    width: 100%;
+    overflow: hidden;
+}
+
+.slider-crates {
+    width: 625vw;
+    animation: slide_right_to_left 5s ease;
+    margin-left: -565vw;
+}
+
+.item-crate-opening {
+    width: 12.5vw;
+    float: left;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.item-icon-crate {
+    font-size: 30px;
+    display: block;
+    margin: 10px 0;
+}
+
+@keyframes slide_right_to_left {
+    0% {
+        margin-left: 0;
+    }
+    100% {
+        margin-left: -565vw;
+    }
 }

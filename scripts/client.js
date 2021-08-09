@@ -384,7 +384,7 @@ socket.on('PLAYER_CITY_BUILDINGS_ALL', cities => {
                         <span class="inline-flex flex-wrap-center hei24 margin10" data-tooltip="Building farms food per round" data-tooltipBackground="brown"><em class="fas fa-drumstick-bite fas-right"></em> ${building.produceFoodPerRound}</span>
                     </div>
                     <div class="build-upgrade">
-                        <button class="upgrade-building" data-name="${building.name}" data-tooltip-big="<b>Upgrade to level</b>: ${building.upgradeLevel + 1} <br> <b>Price</b>: ${(building.price * building.upgradeLevel) * 1.4} <em class='fas fa-coins'></em>" data-tooltipBackground="rgb(59, 53, 47)" data-tooltip-height="40" data-tooltip-width="200">
+                        <button class="upgrade-building" data-name="${building.name}" data-tooltip-big="<b>Upgrade to level</b>: ${building.upgradeLevel + 1} <br> <b>Price</b>: ${(building.price * building.upgradeLevel) * .8} <em class='fas fa-coins'></em>" data-tooltipBackground="rgb(59, 53, 47)" data-tooltip-height="40" data-tooltip-width="200">
                             <img src="icons/upgrade.png" alt="" class="icon36">
                         </button>
                         <span class="level">${building.upgradeLevel}</span>
@@ -425,7 +425,7 @@ socket.on('PLAYER_CITY_BUILDINGS', city => {
                     <span class="inline-flex flex-wrap-center hei24 margin10" data-tooltip="Building farms food per round" data-tooltipBackground="brown"><em class="fas fa-drumstick-bite fas-right"></em> ${building.produceFoodPerRound}</span>
                 </div>
                 <div class="build-upgrade">
-                    <button class="upgrade-building" data-name="${building.name}" data-tooltip-big="<b>Upgrade to level</b>: ${building.upgradeLevel + 1} <br> <b>Price</b>: ${(building.price * building.upgradeLevel) * 1.4} <em class='fas fa-coins'></em>" data-tooltipBackground="rgb(59, 53, 47)" data-tooltip-height="40" data-tooltip-width="200">
+                    <button class="upgrade-building" data-name="${building.name}" data-tooltip-big="<b>Upgrade to level</b>: ${building.upgradeLevel + 1} <br> <b>Price</b>: ${(building.price * building.upgradeLevel) * .8} <em class='fas fa-coins'></em>" data-tooltipBackground="rgb(59, 53, 47)" data-tooltip-height="40" data-tooltip-width="200">
                         <img src="icons/upgrade.png" alt="" class="icon36">
                     </button>
                     <span class="level">${building.upgradeLevel}</span>
@@ -659,4 +659,59 @@ setInterval(() => {
             MobName: monster.name
         })
     })
+/* END */
+
+/* INVENTORY */
+    const inventoryContainer = document.querySelector("#inventory")
+
+    function showItems() {
+        const player_city = GetPlayerCity(name)
+        if(!player_city) return
+
+        const player_inv = player_city.Inventory
+
+        inventoryContainer.innerHTML = ''
+
+        if(player_inv.length == 0) {
+            inventoryContainer.innerHTML = 'Inventory is empty!'
+        }
+        player_inv.forEach(item => {
+            inventoryContainer.innerHTML += `
+                <div class="inventory-item" data-item="${item.name}">
+                    <em class="big-icon ${item.icon}"></em>
+                    <span>${item.name}</span>
+                </div>
+            `
+        })
+
+        document.querySelectorAll(".inventory-item").forEach(item => {
+            item.addEventListener("click", () => {
+                socket.emit('REQUEST_ITEM_USAGE', {
+                    itemName: item.dataset.item,
+                    CityMayor: name
+                })
+            })
+        })
+    }
+
+    // SERVER RESPONDED THAT ITEM IS A CHEST SO PLAYER OPENED IT!
+    socket.on('CRATE_USAGE', data => {
+        const crate_slider = document.querySelector(".crate-opening-container")
+        document.querySelector(".crate-opening-track").classList.add("open")
+        crate_slider.innerHTML = '<div class="slider-crates"></div>'
+        data.items.forEach(item => {
+            crate_slider.querySelector(".slider-crates").innerHTML += `
+                <div class="item-crate-opening">
+                    <em class="${item.icon} item-icon-crate"></em>
+                    ${item.title}
+                </div>
+            `
+        })
+
+        setTimeout(() => {
+            document.querySelector(".crate-opening-track").classList.remove("open")
+        }, 5500)
+    })
+
+    setInterval(showItems, 1000)
 /* END */

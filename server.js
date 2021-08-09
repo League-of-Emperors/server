@@ -24,6 +24,9 @@ const BuildingsArray = [Farm, Mine, Lumbermill, Vault, Granary]
 const [Drake, Chonk] = [require("./classess/Mobs/Drake.class.js"), require("./classess/Mobs/Chonk.class.js")]
 const MobsArray = [Drake, Chonk]
 
+const [EpicCrate, MythicCrate, CommonCrate] = [require("./classess/Items/EpicCrate.class.js"), require("./classess/Items/MythicCrate.class.js"), require("./classess/Items/CommonCrate.class.js")]
+const ItemArray = [EpicCrate, MythicCrate, CommonCrate]
+
 const seed = parseInt(Math.random() * 2048)
 
 const FPS = 1
@@ -86,6 +89,8 @@ class City {
         this.Wood = 700
         this.Stone = 350
         this.Metal = 200
+
+        this.Inventory = [new CommonCrate()]
         
         this.x = x
         this.y = y
@@ -229,14 +234,26 @@ class Server {
                         city.Wood += ((building.WoodPerRound * woodBoost / 5) * building.upgradeLevel)
                         city.Stone += ((building.StonePerRound * mineBoost / 5) * building.upgradeLevel)
                         city.Metal += ((building.MetalPerRound * 1 / 5) * building.upgradeLevel)
-                        city.MaxGold += (building.increseMaxGold * 1 / 5 * building.upgradeLevel) 
-                        city.MaxFood += (building.increseMaxFood * 1 / 5 * building.upgradeLevel) 
+                        city.MaxGold += (building.increseMaxGold * 1 * building.upgradeLevel) 
+                        city.MaxFood += (building.increseMaxFood * 1 * building.upgradeLevel) 
                     }
                     
                 })
 
-                
-                
+                // Droping system
+                ItemArray.forEach(singleItem => {
+                    const chance = Math.random() * 100
+                    const item = new singleItem()
+                    if(item.rarity > chance) {
+                        // DROP IT
+                        city.Inventory.push(item)
+                        this.io.emit('NOTIFICATION', {
+                            color: colorSuccess,
+                            icon: 'fas fa-box-open',
+                            text: `Player ${city.CityMayor} has obtain ${item.name}`
+                        })
+                    }
+                })
 
                 if(city.Gold > city.MaxGold) {
                     city.Gold = city.MaxGold
@@ -250,7 +267,7 @@ class Server {
 
                     /* Check if can upgrade any building */
                     city.buildings.forEach(building => {
-                        let price_of_upgrade = (building.price * building.upgradeLevel) * 1.4
+                        let price_of_upgrade = (building.price * building.upgradeLevel) * .8
                         if(city.Gold < price_of_upgrade) return
 
                         city.Gold -= price_of_upgrade
@@ -419,6 +436,52 @@ class Server {
                     }
                 })
                 
+            })
+
+            socket.on('REQUEST_ITEM_USAGE', data => {
+                if(!data.CityMayor) return
+                if(!data.itemName) return
+
+                ItemArray.forEach(singleItem => {
+                    const instance = new singleItem()
+                    if(instance.name == data.itemName) {
+                        // Check is this item a crate
+
+                        if(instance.isCrate == true) {
+                            const items = []
+                            let winningItem = null
+
+                            for(let i = 0; i < 50; i++) {
+                                items.push(instance.crate.drop[randint(0, instance.crate.drop.length)])
+                            }
+
+                            winningItem = instance.crate.drop[randint(0, instance.crate.drop.length)]
+                            items[47] = winningItem
+
+                            socket.emit('CRATE_USAGE', {
+                                items: items,
+                                winningItem: winningItem
+                            })
+
+                            this.cities.forEach(city => {
+                                city.Inventory.forEach((item, key) => {
+                                    if(item.name == instance.name) {
+                                        let _ = city.Inventory.splice(key)
+                                        this.io.emit('CITIES_UPDATE', this.cities)
+                                    }  
+                                })
+                            })
+
+                            setTimeout(() => {
+                                this.cities.forEach(city => {
+                                    if(city.CityMayor != data.CityMayor) return
+                                    city.Gold += winningItem.addGold
+                                    city.People += winningItem.addPeople
+                                })
+                            }, 5000)
+                        }
+                    }
+                })
             })
 
             socket.on('CITY_BUILD_BUILDING', data => {
@@ -616,9 +679,7 @@ class Server {
                 })
             })
 
-            socket.on('message_send', data => {
-                this.io.emit('message', data)
-            })
+            
 
             /**
              *
@@ -638,7 +699,7 @@ class Server {
 
                     city.buildings.forEach(build => {
                         if(build.name != data.BuildingName) return;
-                        let priceOf = ((build.price * build.upgradeLevel) * 1.4)
+                        let priceOf = ((build.price * build.upgradeLevel) * .8)
                         if(city.Gold >= priceOf) {
                             build.upgradeLevel++
                             city.Gold -= priceOf
@@ -953,6 +1014,25 @@ class Server {
                 })
             }
         }
+    }
+
+    getPluginConfig(name) {
+
+        if(fs.existsSync("./plugins-configs/"+name+".json")) {
+            const json = require("./plugins-configs/"+name+".json")
+            if(json) {
+                return json
+            }
+        }
+
+        
+
+        return false
+    }
+
+    createPluginConfigIfNotExist(name, json) {
+        if(this.getPluginConfig(name) != false) return
+        fs.writeFileSync('plugins-configs/' + name + '.json', JSON.stringify(json)) 
     }
 }
 
