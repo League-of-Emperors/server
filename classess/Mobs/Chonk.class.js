@@ -4,7 +4,7 @@ class Chonk extends Mob {
     maxhp = 1250
     damage = 30
     groupAttack = false
-    rarity = 80  // 0 - 100 (% that mob will spawn somewhere on map in this round)
+    rarity = 0.5  // 0 - 100 (% that mob will spawn somewhere on map in this round)
     loot = 3000
     image = 'assets/chonk_throw_axe.gif'
     animationFrames = ['assets/chonk-slide-1.png','assets/chonk-slide-2.png','assets/chonk-slide-3.png','assets/chonk-slide-4.png']

@@ -35,7 +35,7 @@ class EpicCrate extends Item {
         }]
     }
 
-    rarity = .65
+    rarity = .005
 }
 
 module.exports = EpicCrate

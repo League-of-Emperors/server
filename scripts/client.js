@@ -62,6 +62,9 @@ let _selected_mob_index = 0
 /* ANIMATION */
 let animationStep = 0
 
+/* Placing buildings (farm, other) */
+let _selected_building = null
+
 /* Canvas / Canvas Context */
 const canvas = document.querySelector("canvas")
 const ctx = canvas.getContext("2d")
@@ -262,6 +265,18 @@ function drawCities() {
             city.Size * (ScaleX / 22),
             color
         )
+
+        // ONLY FOR THIS CITY!
+
+        if(city.CityMayor != name) return
+
+        city.buildings.forEach(building => {
+            renderer.renderImage(building.x * ScaleX - offsetX * ScaleX - (8 * (ScaleX / 22)), 
+                building.y * ScaleY - offsetY * ScaleY, 
+                32 * (ScaleX / 22), 
+                32 * (ScaleX / 22), 
+                'icons/'+building.icon)
+        })
     })
     showPlayerCityStatistics()
 }
@@ -355,10 +370,7 @@ socket.on('message', data => {
 /* Building a buildings XD */
 document.querySelectorAll(".col-build").forEach(div => {
     div.addEventListener("click", () => {
-        socket.emit('CITY_BUILD_BUILDING', {
-            CityMayor: name,
-            BuildingName: div.dataset.building
-        })
+        _selected_building = div.dataset.building
     })
 })
 
@@ -397,7 +409,7 @@ socket.on('PLAYER_CITY_BUILDINGS_ALL', cities => {
             btn.addEventListener("click", () => {
                 socket.emit('UPGRADE_BUILDING', {
                     CityMayor: name,
-                    BuildingName: btn.dataset.name
+                    BuildingName: btn.dataset.name,
                 })
             })
         })
@@ -714,4 +726,39 @@ setInterval(() => {
     })
 
     setInterval(showItems, 1000)
+/* END */
+
+/* Placing a building */
+    document.querySelector("canvas")
+    .addEventListener("dblclick", () => {
+        if(GetPlayerCity(name) == undefined) return
+        if(_selected_building != null) {
+            // we can place a build
+
+            const
+                x = mouse.x/ScaleX+offsetX,
+                y = mouse.y/ScaleY+offsetY
+
+            socket.emit('CITY_BUILD_BUILDING', {
+                CityMayor: name,
+                BuildingName: _selected_building,
+                x: x,
+                y: y
+            })
+
+            console.log('build')
+
+            _selected_building = null
+        }
+    })
+
+    setInterval(() => {
+        document.querySelector(".currently-placing-building").innerHTML = (_selected_building != null) ? `Currently selected: ${_selected_building}` : ''
+
+        const btn = document.querySelector(".remove-selected")
+        if(btn == undefined) return
+        btn.addEventListener("click", () => {
+            _selected_building = null
+        })
+    }, 1)
 /* END */

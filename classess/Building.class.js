@@ -15,6 +15,8 @@ class Building {
         this.icon = ''
         this.increseMaxGold = 0
         this.increseMaxFood = 0
+        this.x = 0
+        this.y = 0
     }
 } // This is an abstaract class
 

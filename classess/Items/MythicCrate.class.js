@@ -35,7 +35,7 @@ class MythicCrate extends Item {
         }]
     }
 
-    rarity = .05
+    rarity = .0005
 }
 
 module.exports = MythicCrate

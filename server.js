@@ -100,7 +100,11 @@ class City {
         this.people_can_go_out = true // People can go out of city
         this.export_products = true // People can sell products in other cities.
 
-        this.buildings = [new Farm()]
+        const farm_ = new Farm()
+        farm_.x = this.x + 0
+        farm_.y = this.y + 1
+
+        this.buildings = [farm_]
         this.protection = .4
     }
 }
@@ -204,31 +208,31 @@ class Server {
 
                 let foodBoost = 1, mineBoost = 1, woodBoost = 1
 
-                foodBoost = (getMainBiomeOfCity(city.CityName).getMainBiomeOf() == 0) ? 2 : foodBoost // PLAINS
-                foodBoost = (getMainBiomeOfCity(city.CityName).getMainBiomeOf() == 5) ? 0.2 : foodBoost //  MOUNTAINS
-                foodBoost = (getMainBiomeOfCity(city.CityName).getMainBiomeOf() == 3) ? 0 : foodBoost //  OCEAN
-                foodBoost = (getMainBiomeOfCity(city.CityName).getMainBiomeOf() == 1) ? 0.1 : foodBoost //  DESERT
-                foodBoost = (getMainBiomeOfCity(city.CityName).getMainBiomeOf() == 6) ? 0.75 : foodBoost // TUNDRA
-                foodBoost = (getMainBiomeOfCity(city.CityName).getMainBiomeOf() == 2) ? 1.25 : foodBoost // FOREST
-
-                woodBoost = (getMainBiomeOfCity(city.CityName).getMainBiomeOf() == 0) ? .5 : woodBoost // PLAINS
-                woodBoost = (getMainBiomeOfCity(city.CityName).getMainBiomeOf() == 5) ? 0.5 : woodBoost //  MOUNTAINS
-                woodBoost = (getMainBiomeOfCity(city.CityName).getMainBiomeOf() == 3) ? 0.15 : woodBoost //  OCEAN
-                woodBoost = (getMainBiomeOfCity(city.CityName).getMainBiomeOf() == 1) ? 0.225 : woodBoost //  DESERT
-                woodBoost = (getMainBiomeOfCity(city.CityName).getMainBiomeOf() == 6) ? 1.30 : woodBoost // TUNDRA
-                woodBoost = (getMainBiomeOfCity(city.CityName).getMainBiomeOf() == 2) ? 1.30 : woodBoost // FOREST
-
-                mineBoost = (getMainBiomeOfCity(city.CityName).getMainBiomeOf() == 0) ? .5 : mineBoost // PLAINS
-                mineBoost = (getMainBiomeOfCity(city.CityName).getMainBiomeOf() == 5) ? 2 : mineBoost //  MOUNTAINS
-                mineBoost = (getMainBiomeOfCity(city.CityName).getMainBiomeOf() == 3) ? 0.15 : mineBoost //  OCEAN
-                mineBoost = (getMainBiomeOfCity(city.CityName).getMainBiomeOf() == 1) ? 0.45 : mineBoost //  DESERT
-                mineBoost = (getMainBiomeOfCity(city.CityName).getMainBiomeOf() == 6) ? .5 : mineBoost // TUNDRA
-                mineBoost = (getMainBiomeOfCity(city.CityName).getMainBiomeOf() == 2) ? .5 : mineBoost // FOREST
-
                 city.MaxGold = 75000
                 city.MaxFood = 5000
 
                 city.buildings.forEach(building => {
+                    foodBoost = (getMainBiomeAtXY(building.x, building.y, this.map).getMainBiomeOf() == 0) ? 2 : foodBoost // PLAINS
+                    foodBoost = (getMainBiomeAtXY(building.x, building.y, this.map).getMainBiomeOf() == 5) ? 0.2 : foodBoost //  MOUNTAINS
+                    foodBoost = (getMainBiomeAtXY(building.x, building.y, this.map).getMainBiomeOf() == 3) ? 0 : foodBoost //  OCEAN
+                    foodBoost = (getMainBiomeAtXY(building.x, building.y, this.map).getMainBiomeOf() == 1) ? 0.1 : foodBoost //  DESERT
+                    foodBoost = (getMainBiomeAtXY(building.x, building.y, this.map).getMainBiomeOf() == 6) ? 0.75 : foodBoost // TUNDRA
+                    foodBoost = (getMainBiomeAtXY(building.x, building.y, this.map).getMainBiomeOf() == 2) ? 1.25 : foodBoost // FOREST
+
+                    woodBoost = (getMainBiomeAtXY(building.x, building.y, this.map).getMainBiomeOf() == 0) ? .5 : woodBoost // PLAINS
+                    woodBoost = (getMainBiomeAtXY(building.x, building.y, this.map).getMainBiomeOf() == 5) ? 0.5 : woodBoost //  MOUNTAINS
+                    woodBoost = (getMainBiomeAtXY(building.x, building.y, this.map).getMainBiomeOf() == 3) ? 0.15 : woodBoost //  OCEAN
+                    woodBoost = (getMainBiomeAtXY(building.x, building.y, this.map).getMainBiomeOf() == 1) ? 0.225 : woodBoost //  DESERT
+                    woodBoost = (getMainBiomeAtXY(building.x, building.y, this.map).getMainBiomeOf() == 6) ? 1.30 : woodBoost // TUNDRA
+                    woodBoost = (getMainBiomeAtXY(building.x, building.y, this.map).getMainBiomeOf() == 2) ? 1.30 : woodBoost // FOREST
+
+                    mineBoost = (getMainBiomeAtXY(building.x, building.y, this.map).getMainBiomeOf() == 0) ? .5 : mineBoost // PLAINS
+                    mineBoost = (getMainBiomeAtXY(building.x, building.y, this.map).getMainBiomeOf() == 5) ? 2 : mineBoost //  MOUNTAINS
+                    mineBoost = (getMainBiomeAtXY(building.x, building.y, this.map).getMainBiomeOf() == 3) ? 0.15 : mineBoost //  OCEAN
+                    mineBoost = (getMainBiomeAtXY(building.x, building.y, this.map).getMainBiomeOf() == 1) ? 0.45 : mineBoost //  DESERT
+                    mineBoost = (getMainBiomeAtXY(building.x, building.y, this.map).getMainBiomeOf() == 6) ? .5 : mineBoost // TUNDRA
+                    mineBoost = (getMainBiomeAtXY(building.x, building.y, this.map).getMainBiomeOf() == 2) ? .5 : mineBoost // FOREST
+                    
                     if(city.People > 0.99) {
                         city.Food += (building.produceFoodPerRound * foodBoost * building.upgradeLevel)
                         city.Wood += ((building.WoodPerRound * woodBoost / 5) * building.upgradeLevel)
@@ -298,6 +302,9 @@ class Server {
                             })
 
                             if(canBuild == false) return
+
+                            instance.x = randint(0, this.config.mapX)
+                            instance.y = randint(0, this.config.mapY)
 
                             city.buildings.push(instance)
                             city.Gold -= instance.price
@@ -490,8 +497,12 @@ class Server {
                  * @object data model:
                  * @var BuildingName
                  * @var CityMayor
+                 * @var x
+                 * @var y
                  * 
                 */
+
+                console.log(data)
 
                 this.cities.forEach(city => {
                     if(city.CityMayor == data.CityMayor) {
@@ -509,6 +520,8 @@ class Server {
                             })
 
                             if(isThereBuilded == false) {
+                                instanceOfThisBuilding.x = data.x
+                                instanceOfThisBuilding.y = data.y
                                 city.buildings.push(instanceOfThisBuilding)
                                 city.Gold -= instanceOfThisBuilding.price
                                 city.Wood -= instanceOfThisBuilding.price_wood
@@ -949,7 +962,7 @@ class Server {
             mob.y += yVelocity
 
             // DELETE THIS AFTER TEST
-            mob.hp -= 50
+            mob.hp -= 1
 
             // Check if mob in map
 

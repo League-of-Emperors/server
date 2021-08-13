@@ -981,3 +981,12 @@ input::-webkit-inner-spin-button {
         margin-left: -565vw;
     }
 }
+
+.currently-placing-building {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    background: rgb(19, 17, 16);
+    color: #fff;
+    padding: 10px;
+}
